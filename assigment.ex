@@ -1,14 +1,13 @@
 defmodule User do
+  def initials(name) when name in [nil, ""], do: "?"
   def initials(name) do
-    with true <- name not in [nil, ""],
-    split_name <- String.split(name, " "),
-    2 <- split_name |> length do
+    with split_name <- String.split(name, " "),
+    true <- split_name |> length >= 2 do
       first_letter = split_name |> List.first() |> String.slice(0, 1)
       last_letter = split_name |> List.last() |> String.slice(0, 1)
       "#{first_letter}#{last_letter}"
     else
-      1 -> name |> String.slice(0, 1)
-      _ -> "?"
+      false -> name |> String.slice(0, 1)
     end
   end
 end
